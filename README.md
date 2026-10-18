@@ -136,7 +136,7 @@ Skrypt instaluje tylko zależności potrzebne dla wybranych modułów i framewor
 |------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | ESLint (wspólne) | `eslint` `typescript-eslint` `@eslint/js` `eslint-config-prettier` `eslint-plugin-perfectionist` `eslint-plugin-sonarjs` `eslint-plugin-unused-imports` `globals` |
 | ESLint (Vue)     | `eslint-plugin-vue` `eslint-plugin-vuetify` `postcss-html`                                                                                                        |
-| ESLint (Angular) | `angular-eslint`                                                                                                                                                  |
+| ESLint (Angular) | `angular-eslint` `eslint-plugin-no-relative-import-paths`                                                                                                         |
 | Prettier         | `prettier`                                                                                                                                                        |
 | Stylelint        | `stylelint` `stylelint-config-standard-scss` `stylelint-order`                                                                                                    |
 | TypeScript       | `typescript`                                                                                                                                                      |
@@ -182,15 +182,15 @@ frameworka, a jego metody można ze sobą łączyć; `get()` kończy budowanie i
 Skrypt CLI kopiuje do projektu dwa pliki: `eslint.config.js` z konfiguracją dla wybranego typu projektu oraz
 `tsconfig.eslint.json`, rozszerzający główny `tsconfig.json` o pliki konfiguracyjne z katalogu głównego:
 
+**Vue:**
+
 ```json
 // tsconfig.eslint.json
 {
   "extends": "./tsconfig.json",
-  "include": ["*.ts", "*.js"]
+  "include": ["src/**/*.ts", "src/**/*.vue", "env.d.ts", "*.ts", "*.js"]
 }
 ```
-
-**Vue:**
 
 ```js
 // eslint.config.js
@@ -221,8 +221,18 @@ export default config.get();
 
 **Angular:**
 
+```json
+// tsconfig.eslint.json
+{
+  "extends": "./tsconfig.json",
+  "include": ["src/**/*.ts", "src/**/*.js", "*.ts", "*.js"]
+}
+```
+
 ```js
 // eslint.config.js
+import tseslint from 'typescript-eslint';
+
 import {
   createConfig,
   angularRules,
@@ -247,12 +257,23 @@ const config = createConfig()
   .setPrefixes(['app'])                  // dozwolone prefiksy dla selektorów komponentów i dyrektyw
   .addOverride(templateConfig);          // reguły dla **/*.html - zalecane, niewymagane
 
-export default config.get();
+export default tseslint.config(
+    ...config.get(),
+);
+
 ```
 
 Pominięcie `addOverride(templateConfig)` sprawi, że pliki `**/*.html` nie będą sprawdzane przez ESLint.
 
 **Base:**
+
+```json
+// tsconfig.eslint.json
+{
+  "extends": "./tsconfig.json",
+  "include": ["src/**/*.ts", "src/**/*.js", "*.ts", "*.js"]
+}
+```
 
 ```js
 // eslint.config.js
@@ -614,10 +635,12 @@ i [Reguły Base](#typescript-3).
 
 **Wyłączone**
 
-| Reguła                                   | Opis                                                          |
-|------------------------------------------|---------------------------------------------------------------|
-| `@typescript-eslint/no-inferrable-types` | Jawne adnotacje typów przy inferowanych wartościach dozwolone |
-
+| Reguła                                        | Opis                                                                                      |
+|-----------------------------------------------|-------------------------------------------------------------------------------------------|
+| `@typescript-eslint/no-inferrable-types`      | Jawne adnotacje typów przy inferowanych wartościach dozwolone                             |
+| `vue/html-self-closing`                       | Styl zamykania pustych elementów HTML (self-closing), wyłączona z powodu Prettiera        |
+| `vue/multiline-html-element-content-newline`  | Podział zawartości wieloliniowych elementów na osobne linie, wyłączona z powodu Prettiera |
+| `vue/singleline-html-element-content-newline` | Podział zawartości jednoliniowych elementów na osobne linie, wyłączona z powodu Prettiera |
 ### Prettier
 
 | Opcja                        | Wartość       | Opis                                                                     |
@@ -709,42 +732,42 @@ Reguły dla plików `.ts`:
 
 **Aktywne**
 
-| Reguła                                             | Opis                                                                                                    |
-|----------------------------------------------------|---------------------------------------------------------------------------------------------------------|
-| `@typescript-eslint/ban-ts-comment`                | Zabrania komentarzy `@ts-ignore`, `@ts-nocheck` i podobnych                                             |
-| `@typescript-eslint/consistent-type-imports`       | Wymaga `import type` dla importów zawierających wyłącznie typy                                          |
-| `@typescript-eslint/explicit-function-return-type` | Jawny typ zwracany funkcji, bez wnioskowania                                                            |
-| `@typescript-eslint/no-deprecated`                 | Zgłasza błąd przy API oznaczonym jako `@deprecated`                                                     |
-| `@typescript-eslint/no-duplicate-enum-values`      | Zabrania definiowania tych samych wartości dla różnych kluczy wewnątrz jednego enuma                    |
-| `@typescript-eslint/no-empty-function`             | Zabrania pustych funkcji bez ciała                                                                      |
-| `@typescript-eslint/no-empty-object-type`          | Zabrania tworzenia pustych interfejsów oraz typów obiektowych (zapobiega niebezpiecznemu używaniu `{}`) |
-| `@typescript-eslint/no-explicit-any`               | Zabrania użycia `any`                                                                                   |
-| `@typescript-eslint/no-floating-promises`          | Każdy `Promise` musi być obsłużony (`await`, `.catch`, `void`)                                          |
-| `@typescript-eslint/no-non-null-assertion`         | Zabrania używania operatora non-null assertion (`!`), który omija system typów podobnie jak `any`       |
-| `@typescript-eslint/no-unused-vars`                | Błąd przy nieużywanych zmiennych; zmienne z prefiksem `_` są wykluczone                                 |
-| `comma-dangle`                                     | Wymaga przecinka po ostatnim elemencie w wieloliniowych strukturach                                     |
-| `eol-last`                                         | Wymaga pustej linii na końcu każdego pliku                                                              |
-| `max-lines`                                        | Maksymalnie 200 linii na plik (bez pustych i komentarzy)                                                |
-| `no-console`                                       | Zabrania `console.log` i `console.info`; dozwolone tylko `warn` i `error`                               |
-| `padding-line-between-statements`                  | Pusta linia: po bloku importów, przed `export`, przed `return`, przed blokiem po zmiennej               |
-| `perfectionist/sort-enums`                         | Sortuje wartości enumów rosnąco                                                                         |
-| `perfectionist/sort-exports`                       | Sortuje eksporty z pliku rosnąco                                                                        |
-| `perfectionist/sort-imports`                       | Sortuje bloki importów rosnąco                                                                          |
-| `perfectionist/sort-objects`                       | Sortuje klucze obiektów literałowych rosnąco                                                            |
-| `quotes`                                           | Wymaga pojedynczych cudzysłowów                                                                         |
-| `semi`                                             | Wymaga średników na końcu instrukcji                                                                    |
-| `sonarjs/cognitive-complexity`                     | Maksymalna złożoność kognitywna funkcji: 10                                                             |
-| `spaced-comment`                                   | Wymaga spacji po `//` i `/*` w komentarzach                                                             |
-| `unused-imports/no-unused-imports`                 | Błąd przy nieużywanych importach                                                                        |
-| `@angular-eslint/component-selector`               | Komponenty (elementy) muszą mieć prefiks `app` i styl kebab-case                                        |
-| `@angular-eslint/directive-selector`               | Dyrektywy atrybutowe muszą mieć prefiks `app` i styl camelCase                                          |
-| `@angular-eslint/no-empty-lifecycle-method`        | Zabrania pustych metod lifecycle Angulara                                                               |
-| `@angular-eslint/use-lifecycle-interface`          | Wymaga implementacji interfejsów lifecycle (`OnInit`, `OnDestroy` itp.)                                 |
-| `@typescript-eslint/explicit-member-accessibility` | Jawny modyfikator dostępu (`public`, `private`, `protected`) dla każdego członka klasy                  |
-| `@typescript-eslint/member-ordering`               | Kolejność w klasie: pola statyczne → z dekoratorem → instancji → konstruktor → metody                   |
-| `@typescript-eslint/typedef`                       | Jawne typy wyłącznie dla parametrów arrow function (pozostałe adnotacje wyłączone)                      |
-| `sonarjs/no-duplicate-string`                      | Błąd przy zduplikowanych literałach tekstowych w kodzie                                                 |
-
+| Reguła                                              | Opis                                                                                                                             |
+|-----------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------|
+| `@typescript-eslint/ban-ts-comment`                 | Zabrania komentarzy `@ts-ignore`, `@ts-nocheck` i podobnych                                                                      |
+| `@typescript-eslint/consistent-type-imports`        | Wymaga `import type` dla importów zawierających wyłącznie typy                                                                   |
+| `@typescript-eslint/explicit-function-return-type`  | Jawny typ zwracany funkcji, bez wnioskowania                                                                                     |
+| `@typescript-eslint/no-deprecated`                  | Zgłasza błąd przy API oznaczonym jako `@deprecated`                                                                              |
+| `@typescript-eslint/no-duplicate-enum-values`       | Zabrania definiowania tych samych wartości dla różnych kluczy wewnątrz jednego enuma                                             |
+| `@typescript-eslint/no-empty-function`              | Zabrania pustych funkcji bez ciała                                                                                               |
+| `@typescript-eslint/no-empty-object-type`           | Zabrania tworzenia pustych interfejsów oraz typów obiektowych (zapobiega niebezpiecznemu używaniu `{}`)                          |
+| `@typescript-eslint/no-explicit-any`                | Zabrania użycia `any`                                                                                                            |
+| `@typescript-eslint/no-floating-promises`           | Każdy `Promise` musi być obsłużony (`await`, `.catch`, `void`)                                                                   |
+| `@typescript-eslint/no-non-null-assertion`          | Zabrania używania operatora non-null assertion (`!`), który omija system typów podobnie jak `any`                                |
+| `@typescript-eslint/no-unused-vars`                 | Błąd przy nieużywanych zmiennych; zmienne z prefiksem `_` są wykluczone                                                          |
+| `comma-dangle`                                      | Wymaga przecinka po ostatnim elemencie w wieloliniowych strukturach                                                              |
+| `eol-last`                                          | Wymaga pustej linii na końcu każdego pliku                                                                                       |
+| `max-lines`                                         | Maksymalnie 200 linii na plik (bez pustych i komentarzy)                                                                         |
+| `no-console`                                        | Zabrania `console.log` i `console.info`; dozwolone tylko `warn` i `error`                                                        |
+| `padding-line-between-statements`                   | Pusta linia: po bloku importów, przed `export`, przed `return`, przed blokiem po zmiennej                                        |
+| `perfectionist/sort-enums`                          | Sortuje wartości enumów rosnąco                                                                                                  |
+| `perfectionist/sort-exports`                        | Sortuje eksporty z pliku rosnąco                                                                                                 |
+| `perfectionist/sort-imports`                        | Sortuje bloki importów rosnąco                                                                                                   |
+| `perfectionist/sort-objects`                        | Sortuje klucze obiektów literałowych rosnąco                                                                                     |
+| `quotes`                                            | Wymaga pojedynczych cudzysłowów                                                                                                  |
+| `semi`                                              | Wymaga średników na końcu instrukcji                                                                                             |
+| `sonarjs/cognitive-complexity`                      | Maksymalna złożoność kognitywna funkcji: 10                                                                                      |
+| `spaced-comment`                                    | Wymaga spacji po `//` i `/*` w komentarzach                                                                                      |
+| `unused-imports/no-unused-imports`                  | Błąd przy nieużywanych importach                                                                                                 |
+| `@angular-eslint/component-selector`                | Komponenty (elementy) muszą mieć prefiks `app` i styl kebab-case                                                                 |
+| `@angular-eslint/directive-selector`                | Dyrektywy atrybutowe muszą mieć prefiks `app` i styl camelCase                                                                   |
+| `@angular-eslint/no-empty-lifecycle-method`         | Zabrania pustych metod lifecycle Angulara                                                                                        |
+| `@angular-eslint/use-lifecycle-interface`           | Wymaga implementacji interfejsów lifecycle (`OnInit`, `OnDestroy` itp.)                                                          |
+| `@typescript-eslint/explicit-member-accessibility`  | Jawny modyfikator dostępu (`public`, `private`, `protected`) dla każdego członka klasy                                           |
+| `@typescript-eslint/member-ordering`                | Kolejność w klasie: pola statyczne → z dekoratorem → instancji → konstruktor → metody                                            |
+| `@typescript-eslint/typedef`                        | Jawne typy wyłącznie dla parametrów arrow function (pozostałe adnotacje wyłączone)                                               |
+| `sonarjs/no-duplicate-string`                       | Błąd przy zduplikowanych literałach tekstowych w kodzie                                                                          |
+| `no-relative-import-paths/no-relative-import-paths` | Zabrania importów względnych spoza bieżącego katalogu (`../`), wymaga aliasu `@/` (`@/*` → `src/*`); importy z `./` są dozwolone |
 **Wyłączone**
 
 | Reguła                                   | Opis                                                          |
@@ -770,11 +793,13 @@ Reguły dla plików `**/*.html` (przez `templateConfig`):
 
 **Wyłączone**
 
-| Reguła                                                  | Opis                                                 |
-|---------------------------------------------------------|------------------------------------------------------|
-| `@angular-eslint/template/click-events-have-key-events` | Klawiaturowe odpowiedniki kliknięć nie są wymagane   |
-| `@angular-eslint/template/interactive-supports-focus`   | Fokus na interaktywnych elementach nie jest wymagany |
-| `@angular-eslint/template/no-inline-styles`             | Style inline są dozwolone                            |
+| Reguła                                                  | Opis                                                     |
+|---------------------------------------------------------|----------------------------------------------------------|
+| `@angular-eslint/template/click-events-have-key-events` | Klawiaturowe odpowiedniki kliknięć nie są wymagane       |
+| `@angular-eslint/template/interactive-supports-focus`   | Fokus na interaktywnych elementach nie jest wymagany     |
+| `@angular-eslint/template/no-inline-styles`             | Style inline są dozwolone                                |
+| `@typescript-eslint/adjacent-overload-signatures`       | Reguła TypeScript, nie ma zastosowania w szablonach HTML |
+| `@typescript-eslint/ban-ts-comment`                     | Reguła TypeScript, nie ma zastosowania w szablonach HTML |
 
 ### Prettier
 
