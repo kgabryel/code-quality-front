@@ -1,0 +1,43 @@
+{
+  "name": "@kgabryel-dev/code-quality",
+  "version": "1.0.0",
+  "description": "Shared code quality tools",
+  "type": "module",
+  "files": [
+    "eslint/",
+    "prettier/",
+    "resources/",
+    "scripts/",
+    "stylelint/",
+    "tsconfig/"
+  ],
+  "bin": {
+    "code-quality": "scripts/cli.js"
+  },
+  "exports": {
+    "./eslint/BaseConfigBuilder": "./eslint/BaseConfigBuilder.js",
+    "./eslint/VueConfigBuilder": "./eslint/VueConfigBuilder.js",
+    "./eslint/AngularConfigBuilder": "./eslint/AngularConfigBuilder.js",
+    "./eslint/plugins/vue-order": "./eslint/plugins/vue-order/index.js",
+    "./eslint/plugins/vue-order/helpers": "./eslint/plugins/vue-order/helpers.js",
+    "./eslint/plugins/vue-order/types/blank-line": "./eslint/plugins/vue-order/types/blank-line.js",
+    "./eslint/plugins/vue-order/types/node-types": "./eslint/plugins/vue-order/types/node-types.js",
+    "./eslint/plugins/vue-order/example.config": "./eslint/plugins/vue-order/example.config.js",
+    "./prettier/base": "./prettier/base.js",
+    "./prettier/vue": "./prettier/vue.js",
+    "./prettier/angular": "./prettier/angular.js",
+    "./stylelint/base": "./stylelint/base.js",
+    "./stylelint/vue": "./stylelint/vue.js",
+    "./stylelint/angular": "./stylelint/angular.js",
+    "./tsconfig/base.json": "./tsconfig/base.json",
+    "./tsconfig/vue.json": "./tsconfig/vue.json",
+    "./tsconfig/angular.json": "./tsconfig/angular.json"
+  },
+  "dependencies": {
+    "node-json-minify": "^3.0.0",
+    "prompts": "^2.4.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
