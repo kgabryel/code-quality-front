@@ -74,6 +74,8 @@ export const templateConfig = {
     '@angular-eslint/template/no-any': 'error',
     '@angular-eslint/template/no-inline-styles': 'off',
     '@angular-eslint/template/no-negated-async': 'error',
+    '@typescript-eslint/ban-ts-comment': 'off',
+    '@typescript-eslint/adjacent-overload-signatures': 'off'
   },
 };
 
