@@ -61,7 +61,7 @@ działanie czterech kluczowych narzędzi: ESLint, Prettier, Stylelint i TypeScri
 ## Instalacja i konfiguracja
 
 ```bash
-npm install --save-dev @kgabryel/code-quality
+npm install --save-dev @kgabryel-dev/code-quality
 npx code-quality
 ```
 
