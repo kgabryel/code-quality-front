@@ -1,3 +1,5 @@
+import tseslint from 'typescript-eslint';
+
 import {
   createConfig,
   angularRules,
@@ -24,4 +26,6 @@ const config = createConfig()
   .setPrefixes(['app'])
   .addOverride(templateConfig);
 
-export default config.get();
+export default tseslint.config(
+  ...config.get(),
+);
