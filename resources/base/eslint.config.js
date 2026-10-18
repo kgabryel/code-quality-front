@@ -1,4 +1,4 @@
-import { createConfig, baseRules, baseExtends, basePlugins } from '@kgabryel/code-quality/eslint/BaseConfigBuilder';
+import { createConfig, baseRules, baseExtends, basePlugins } from '@kgabryel-dev/code-quality/eslint/BaseConfigBuilder';
 import globals from 'globals';
 
 const config = createConfig()

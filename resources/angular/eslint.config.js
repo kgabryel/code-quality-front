@@ -4,7 +4,7 @@ import {
   templateConfig,
   angularExtends,
   angularPlugins,
-} from '@kgabryel/code-quality/eslint/AngularConfigBuilder';
+} from '@kgabryel-dev/code-quality/eslint/AngularConfigBuilder';
 import globals from 'globals';
 
 const config = createConfig()

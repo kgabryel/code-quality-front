@@ -1,4 +1,4 @@
-import angularConfig from '@kgabryel/code-quality/prettier/angular';
+import angularConfig from '@kgabryel-dev/code-quality/prettier/angular';
 
 export default {
   ...angularConfig,

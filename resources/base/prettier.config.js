@@ -1,4 +1,4 @@
-import baseConfig from '@kgabryel/code-quality/prettier/base';
+import baseConfig from '@kgabryel-dev/code-quality/prettier/base';
 
 export default {
   ...baseConfig,

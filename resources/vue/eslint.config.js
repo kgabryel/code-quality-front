@@ -1,5 +1,5 @@
-import { vueOrderConfig } from '@kgabryel/code-quality/eslint/plugins/vue-order/example.config';
-import { createConfig, vueRules, vueExtends, vuePlugins } from '@kgabryel/code-quality/eslint/VueConfigBuilder';
+import { vueOrderConfig } from '@kgabryel-dev/code-quality/eslint/plugins/vue-order/example.config';
+import { createConfig, vueRules, vueExtends, vuePlugins } from '@kgabryel-dev/code-quality/eslint/VueConfigBuilder';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 

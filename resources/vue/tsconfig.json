@@ -1,5 +1,5 @@
 {
-  "extends": "@kgabryel/code-quality/tsconfig/vue.json",
+  "extends": "@kgabryel-dev/code-quality/tsconfig/vue.json",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {

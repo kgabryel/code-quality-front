@@ -1,5 +1,5 @@
 {
-  "extends": "@kgabryel/code-quality/tsconfig/base.json",
+  "extends": "@kgabryel-dev/code-quality/tsconfig/base.json",
   "compilerOptions": {
     "baseUrl": "."
   },

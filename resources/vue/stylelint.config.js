@@ -1,3 +1,3 @@
 export default {
-  extends: ['@kgabryel/code-quality/stylelint/vue'],
+  extends: ['@kgabryel-dev/code-quality/stylelint/vue'],
 };

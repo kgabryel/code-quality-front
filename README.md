@@ -1,4 +1,4 @@
-# @kgabryel/code-quality
+# @kgabryel-dev/code-quality
 
 Współdzielone konfiguracje [ESLint](https://eslint.org), [Prettier](https://prettier.io), 
 [Stylelint](https://stylelint.io) i [TypeScript](https://www.typescriptlang.org). Z dedykowanym wsparciem dla 
@@ -52,7 +52,7 @@ ekosystemów [Vue 3](https://vuejs.org) i [Angular](https://angular.dev).
 
 ## Główne założenia
 
-`@kgabryel/code-quality` powstał z myślą o jednym standardzie jakości kodu w projektach TypeScript - zamiast
+`@kgabryel-dev/code-quality` powstał z myślą o jednym standardzie jakości kodu w projektach TypeScript - zamiast
 rozproszonych plików konfiguracyjnych, które trudno trzymać w synchronizacji, pakiet agreguje, unifikuje i automatyzuje
 działanie czterech kluczowych narzędzi: ESLint, Prettier, Stylelint i TypeScript.
 
@@ -194,10 +194,10 @@ Skrypt CLI kopiuje do projektu dwa pliki: `eslint.config.js` z konfiguracją dla
 
 ```js
 // eslint.config.js
-import { createConfig, vueRules, vueExtends, vuePlugins } from '@kgabryel/code-quality/eslint/VueConfigBuilder';
+import { createConfig, vueRules, vueExtends, vuePlugins } from '@kgabryel-dev/code-quality/eslint/VueConfigBuilder';
 import tseslint from 'typescript-eslint';
 import globals from 'globals';
-import { vueOrderConfig } from '@kgabryel/code-quality/eslint/plugins/vue-order/example.config';
+import { vueOrderConfig } from '@kgabryel-dev/code-quality/eslint/plugins/vue-order/example.config';
 
 const config = createConfig()
   .useTsConfig('./tsconfig.eslint.json')  // wczytywanie plików i reguł ignorowania na podstawie tsconfig, błąd przerywa proces
@@ -229,7 +229,7 @@ import {
   angularExtends,
   angularPlugins,
   templateConfig,                        // gotowy blok reguł dla plików **/*.html
-} from '@kgabryel/code-quality/eslint/AngularConfigBuilder';
+} from '@kgabryel-dev/code-quality/eslint/AngularConfigBuilder';
 import globals from 'globals';
 
 const config = createConfig()
@@ -256,7 +256,7 @@ Pominięcie `addOverride(templateConfig)` sprawi, że pliki `**/*.html` nie będ
 
 ```js
 // eslint.config.js
-import { createConfig, baseRules, baseExtends, basePlugins } from '@kgabryel/code-quality/eslint/BaseConfigBuilder';
+import { createConfig, baseRules, baseExtends, basePlugins } from '@kgabryel-dev/code-quality/eslint/BaseConfigBuilder';
 import globals from 'globals';
 
 const config = createConfig()
@@ -344,7 +344,7 @@ Plugin `vue-order` pilnuje kolejności bloków kodu w plikach `.vue` (`<script s
 Pinia, serwisy. Konfigurację przekazuje się przez `vuePlugins`:
 
 ```js
-import { vueOrderConfig } from '@kgabryel/code-quality/eslint/plugins/vue-order/example.config';
+import { vueOrderConfig } from '@kgabryel-dev/code-quality/eslint/plugins/vue-order/example.config';
 
 .setPlugins(vuePlugins(vueOrderConfig))
 ```
@@ -361,7 +361,7 @@ Skrypt CLI kopiuje do projektu dwa pliki: `prettier.config.js` z importem odpowi
 
 ```js
 // prettier.config.js
-import vueConfig from '@kgabryel/code-quality/prettier/vue';
+import vueConfig from '@kgabryel-dev/code-quality/prettier/vue';
 
 export default {
   ...vueConfig,
@@ -370,8 +370,8 @@ export default {
 
 Importowana konfiguracja zawiera gotowy zestaw opcji Prettiera. Warianty `base` i `angular` konfiguruje się tak samo
 
-- wystarczy zmienić ścieżkę importu na `@kgabryel/code-quality/prettier/base` lub
-  `@kgabryel/code-quality/prettier/angular`. Pełny opis reguł oraz zawartość `.prettierignore` są w
+- wystarczy zmienić ścieżkę importu na `@kgabryel-dev/code-quality/prettier/base` lub
+  `@kgabryel-dev/code-quality/prettier/angular`. Pełny opis reguł oraz zawartość `.prettierignore` są w
   sekcjach [Reguły Vue](#prettier-1), [Reguły Angulara](#prettier-2) i [Reguły Base](#prettier-3).
 
 ### Dostosowanie
@@ -381,7 +381,7 @@ Importowana konfiguracja zawiera gotowy zestaw opcji Prettiera. Warianty `base` 
 **Dodawanie i nadpisywanie** - klucz podany po rozwinięciu ma pierwszeństwo nad oryginałem:
 
 ```js
-import vueConfig from '@kgabryel/code-quality/prettier/vue';
+import vueConfig from '@kgabryel-dev/code-quality/prettier/vue';
 
 export default {
   ...vueConfig,
@@ -393,7 +393,7 @@ export default {
 **Usuwanie:**
 
 ```js
-import baseConfig from '@kgabryel/code-quality/prettier/base';
+import baseConfig from '@kgabryel-dev/code-quality/prettier/base';
 
 const config = { ...baseConfig }; // usunięcie z oryginału (delete) zmodyfikowałoby importowany moduł
 delete config.printWidth;
@@ -406,7 +406,7 @@ export default config;
 **Dodawanie i nadpisywanie** - `overrides` to tablica, więc rozszerza się ją przez spread, zamiast zastępować w całości:
 
 ```js
-import vueConfig from '@kgabryel/code-quality/prettier/vue';
+import vueConfig from '@kgabryel-dev/code-quality/prettier/vue';
 
 export default {
   ...vueConfig,
@@ -436,12 +436,12 @@ Skrypt CLI kopiuje do projektu plik `stylelint.config.js`, rozszerzający odpowi
 ```js
 // stylelint.config.js
 export default {
-  extends: ['@kgabryel/code-quality/stylelint/vue'],
+  extends: ['@kgabryel-dev/code-quality/stylelint/vue'],
 };
 ```
 
 Warianty `base` i `angular` konfiguruje się tak samo - wystarczy zmienić ścieżkę w tablicy `extends` na
-`@kgabryel/code-quality/stylelint/base` lub `@kgabryel/code-quality/stylelint/angular`. Pełny opis reguł jest w
+`@kgabryel-dev/code-quality/stylelint/base` lub `@kgabryel-dev/code-quality/stylelint/angular`. Pełny opis reguł jest w
 sekcjach [Reguły Vue](#stylelint-1), [Reguły Angulara](#stylelint-2) i [Reguły Base](#stylelint-3).
 
 ### Dostosowanie
@@ -452,7 +452,7 @@ sekcjach [Reguły Vue](#stylelint-1), [Reguły Angulara](#stylelint-2) i [Reguł
 
 ```js
 export default {
-  extends: ['@kgabryel/code-quality/stylelint/vue'],
+  extends: ['@kgabryel-dev/code-quality/stylelint/vue'],
   rules: {
     'max-nesting-depth': 5,       // nadpisanie istniejącej
     'color-no-invalid-hex': true, // dodanie nowej
@@ -464,7 +464,7 @@ export default {
 
 ```js
 export default {
-  extends: ['@kgabryel/code-quality/stylelint/vue'],
+  extends: ['@kgabryel-dev/code-quality/stylelint/vue'],
   rules: {
     'block-no-empty': null,
   },
@@ -482,7 +482,7 @@ Skrypt CLI kopiuje do projektu plik `tsconfig.json`, rozszerzający odpowiednią
 ```json
 // tsconfig.json
 {
-  "extends": "@kgabryel/code-quality/tsconfig/vue.json",
+  "extends": "@kgabryel-dev/code-quality/tsconfig/vue.json",
   "compilerOptions": {
     "baseUrl": ".",                                        // katalog główny projektu jako baza ścieżek, wymagane przy używaniu paths
     "paths": {
@@ -499,7 +499,7 @@ Skrypt CLI kopiuje do projektu plik `tsconfig.json`, rozszerzający odpowiednią
 ```json
 // tsconfig.json
 {
-  "extends": "@kgabryel/code-quality/tsconfig/angular.json",
+  "extends": "@kgabryel-dev/code-quality/tsconfig/angular.json",
   "compilerOptions": {
     "baseUrl": ".",                               // katalog główny projektu jako baza ścieżek, wymagane przy używaniu paths
     "paths": {
@@ -516,7 +516,7 @@ Skrypt CLI kopiuje do projektu plik `tsconfig.json`, rozszerzający odpowiednią
 ```json
 // tsconfig.json
 {
-  "extends": "@kgabryel/code-quality/tsconfig/base.json",
+  "extends": "@kgabryel-dev/code-quality/tsconfig/base.json",
   "compilerOptions": {
     "baseUrl": "."                    // katalog główny projektu jako baza ścieżek
   },
@@ -534,7 +534,7 @@ i [Reguły Base](#typescript-3).
 
 ```json
 {
-  "extends": "@kgabryel/code-quality/tsconfig/vue.json",
+  "extends": "@kgabryel-dev/code-quality/tsconfig/vue.json",
   "compilerOptions": {
     "baseUrl": ".",
     "target": "ES2020",   // nadpisanie
@@ -549,7 +549,7 @@ i [Reguły Base](#typescript-3).
 
 ```json
 {
-  "extends": "@kgabryel/code-quality/tsconfig/base.json",
+  "extends": "@kgabryel-dev/code-quality/tsconfig/base.json",
   "compilerOptions": {
     "baseUrl": ".",
     "noUnusedLocals": false,

@@ -1,3 +1,3 @@
 export default {
-  extends: ['@kgabryel/code-quality/stylelint/angular'],
+  extends: ['@kgabryel-dev/code-quality/stylelint/angular'],
 };

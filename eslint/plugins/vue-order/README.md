@@ -75,7 +75,7 @@ zabronione (`disabledTypes`).
 
 ## Integracja
 
-Plugin wchodzi w skład pakietu `@kgabryel/code-quality`. Podpina się go w pliku `eslint.config.js` za pomocą funkcji
+Plugin wchodzi w skład pakietu `@kgabryel-dev/code-quality`. Podpina się go w pliku `eslint.config.js` za pomocą funkcji
 `create()`:
 
 ```js
@@ -84,8 +84,8 @@ import {
   createConfig,
   vuePlugins,
   // ...inne helpery konfiguracyjne, niezwiązane z vue-order
-} from '@kgabryel/code-quality/eslint/VueConfigBuilder';
-import { vueOrderConfig } from '@kgabryel/code-quality/eslint/plugins/vue-order/example.config';
+} from '@kgabryel-dev/code-quality/eslint/VueConfigBuilder';
+import { vueOrderConfig } from '@kgabryel-dev/code-quality/eslint/plugins/vue-order/example.config';
 
 const config = createConfig()
   // ...pozostała konfiguracja projektu (rules, extends, languageOptions itd.)
@@ -117,7 +117,7 @@ projektu. Bez względu na to, jak ostatecznie będzie wyglądać, zawsze składa
 
 ```js
 // eslint.config.js
-import { create } from '@kgabryel/code-quality/eslint/plugins/vue-order';
+import { create } from '@kgabryel-dev/code-quality/eslint/plugins/vue-order';
 import { vueOrderConfig } from './twoja-konfiguracja-vue-order.js';
 
 export default [
@@ -424,7 +424,7 @@ import {
   and,
   or,
   not,
-} from '@kgabryel/code-quality/eslint/plugins/vue-order/helpers';
+} from '@kgabryel-dev/code-quality/eslint/plugins/vue-order/helpers';
 ```
 
 Dostępne helpery:
@@ -727,9 +727,9 @@ mają priorytet `0`.
 ### Plik .vue
 
 ```js
-import { BlankLine } from '@kgabryel/code-quality/eslint/plugins/vue-order/types/blank-line';
-import { NodeType } from '@kgabryel/code-quality/eslint/plugins/vue-order/types/node-types';
-import { isVueFile } from '@kgabryel/code-quality/eslint/plugins/vue-order/helpers';
+import { BlankLine } from '@kgabryel-dev/code-quality/eslint/plugins/vue-order/types/blank-line';
+import { NodeType } from '@kgabryel-dev/code-quality/eslint/plugins/vue-order/types/node-types';
+import { isVueFile } from '@kgabryel-dev/code-quality/eslint/plugins/vue-order/helpers';
 
 const vue = {
   identifier: 'vue',
@@ -789,15 +789,15 @@ const vue = {
 ### Composable (use\*.ts)
 
 ```js
-import { BlankLine } from '@kgabryel/code-quality/eslint/plugins/vue-order/types/blank-line';
-import { NodeType } from '@kgabryel/code-quality/eslint/plugins/vue-order/types/node-types';
+import { BlankLine } from '@kgabryel-dev/code-quality/eslint/plugins/vue-order/types/blank-line';
+import { NodeType } from '@kgabryel-dev/code-quality/eslint/plugins/vue-order/types/node-types';
 import {
   and,
   getComposableBody,
   isInDirectory,
   isTsFile,
   matchesFile,
-} from '@kgabryel/code-quality/eslint/plugins/vue-order/helpers';
+} from '@kgabryel-dev/code-quality/eslint/plugins/vue-order/helpers';
 
 const composable = {
   identifier: 'composableFile',
