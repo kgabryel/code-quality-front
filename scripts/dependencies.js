@@ -18,7 +18,7 @@ const commonDeps = {
 
 const frameworkDeps = {
   angular: {
-    eslint: ['angular-eslint'],
+    eslint: ['angular-eslint', 'eslint-plugin-no-relative-import-paths'],
     stylelint: [],
   },
   vue: {

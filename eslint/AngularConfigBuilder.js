@@ -1,11 +1,13 @@
 import angular from 'angular-eslint';
 
 import { BaseConfigBuilder, baseExtends, basePlugins, baseRules } from './BaseConfigBuilder.js';
+import noRelativeImportPaths from 'eslint-plugin-no-relative-import-paths';
 
 export const angularExtends = [...baseExtends, ...angular.configs.tsRecommended];
 
 export const angularPlugins = {
   ...basePlugins,
+  'no-relative-import-paths': noRelativeImportPaths,
 };
 
 export const angularRules = {
@@ -61,6 +63,10 @@ export const angularRules = {
     },
   ],
   'sonarjs/no-duplicate-string': 'error',
+  'no-relative-import-paths/no-relative-import-paths': [
+    'error',
+    { allowSameFolder: true, prefix: '@', rootDir: 'src' },
+  ],
 };
 
 export const templateConfig = {
