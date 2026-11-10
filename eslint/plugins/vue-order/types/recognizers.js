@@ -106,11 +106,7 @@ export const coreRecognizers = [
   },
   {
     priority: 30,
-    test: (node) => {
-      const inner = unwrapExport(node);
-
-      return inner?.type === 'VariableDeclaration' && isCallExpression(inner.declarations[0]?.init, 'withDefaults');
-    },
+    test: (node) => isVarCall(node, 'withDefaults') || isExpressionCall(node, 'withDefaults'),
     type: NodeType.WithDefaults,
   },
   {
