@@ -50,6 +50,9 @@ export const vueRules = {
   'vue/no-v-html': 'error',
   'vue/order-in-components': 'error',
   'vue/padding-line-between-blocks': ['error', 'always'],
+  'vue/singleline-html-element-content-newline': 'off',
+  'vue/multiline-html-element-content-newline': 'off',
+  'vue/html-self-closing': 'off',
 };
 
 export class VueConfigBuilder extends BaseConfigBuilder {
